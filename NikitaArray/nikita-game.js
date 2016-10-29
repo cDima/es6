@@ -19,14 +19,22 @@ function splitGame(arr, start, end){
     
     if (right == 1) return 0;
     log(' sum=' + right);
-    
+    if (right === 0) {        
+        return end - start - 1; 
+    } 
     let maxLvl = 0;
     for(let i = start; i + 1 < end; i++){
         left += arr[i];
         right -= arr[i];
         if (right < left) break;
+        //if(start + 1 < i && i + 1 < end && arr[i-1] === 0 && arr[i] === 0) {
+        //    break;
+        //}
         //log(' left?=right: ' + left + '?=' + right);
         if (left === right){
+            if (i > start + 1 && arr[i] === arr[i-1] && arr[i] == 0) {
+                break;
+            }
             log(' left==right:' + left + ' i:' + i);// + ' arr:' + arr.slice(start, end) + ' start:' + start + ' end:' + end);
             let levelsLeft = splitGame(arr, start, i+1);
             let levelsRight = splitGame(arr, i+1, end);
@@ -49,7 +57,7 @@ function splitGame(arr, start, end){
     return maxLvl;
 }
 function log(s){
-    console.log(s);
+    //console.log(s);
 }
 function processData(input) {
     //Enter your code here
@@ -60,7 +68,7 @@ function processData(input) {
         cache = {};
         let ans = splitGame(arr, 0, arr.length);
         console.log(ans);
-        log('in calls: ' + calls);
+        //console.log('in calls: ' + calls);
     }
 } 
 
